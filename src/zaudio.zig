@@ -273,6 +273,12 @@ pub const DitherMode = enum(u32) {
     triangle,
 };
 
+pub const DitherMode = enum(u32) {
+    none,
+    rectangle,
+    triangle,
+};
+
 pub const AttenuationModel = enum(u32) {
     none,
     inverse,
@@ -1080,28 +1086,6 @@ pub const Decoder = opaque {
 pub const decoderReadProc = fn (decoder: *Decoder, buffer_out: *anyopaque, bytes_to_read: usize, bytes_read: *usize) callconv(.c) Result;
 pub const decoderSeekProc = fn (decoder: *Decoder, byte_offset: i64, origin: Vfs.SeekOrigin) callconv(.c) Result;
 pub const decoderTellProc = fn (decoder: *Decoder, cursor: *i64) callconv(.c) Result;
-
-//--------------------------------------------------------------------------------------------------
-//
-// Encoder
-//
-//--------------------------------------------------------------------------------------------------
-
-pub const Encoder = opaque {
-    pub const Config = extern struct {
-        encoding_format: EncodingFormat,
-        format: Format,
-        channels: u32,
-        sample_rate: u32,
-        allocation_callbacks: AllocationCallbacks,
-    };
-};
-
-pub const encoderWriteProc = fn (encoder: *Encoder, buffer_in: *anyopaque, bytes_to_write: usize, bytes_written: *usize) callconv(.c) Result;
-pub const encoderSeekProc = fn (encoder: *Encoder, offset: i64, origin: Vfs.SeekOrigin) callconv(.c) Result;
-pub const encoderInitProc = fn (encoder: *Encoder) callconv(.c) Result;
-pub const encoderUninitProc = fn (encoder: *Encoder) callconv(.c) void;
-pub const encoderWritePcmFrameProc = fn (encoder: *Encoder, frames_in: *anyopaque, frame_count: u64, frames_written: *u64) callconv(.c) Result;
 
 //--------------------------------------------------------------------------------------------------
 //
