@@ -44,7 +44,7 @@ pub fn build(b: *std.Build) void {
         .file = b.path("src/zaudio.c"),
         .flags = &.{
             "-std=c99",
-            "-fno-sanitize=undefined",
+            if (optimize == .Debug or optimize == .ReleaseSafe) "-fno-sanitize=undefined" else "",
         },
     });
     miniaudio.addCSourceFile(.{
@@ -56,7 +56,7 @@ pub fn build(b: *std.Build) void {
             "-DMA_NO_DSOUND",
             "-DMA_NO_WINMM",
             "-std=c99",
-            "-fno-sanitize=undefined",
+            if (optimize == .Debug or optimize == .ReleaseSafe) "-fno-sanitize=undefined" else "",
             if (target.result.os.tag == .macos) "-DMA_NO_RUNTIME_LINKING" else "",
         },
     });
